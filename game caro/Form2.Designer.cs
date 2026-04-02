@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ChessBoard1 = new System.Windows.Forms.Panel();
             this.lblPlayer2 = new System.Windows.Forms.Label();
             this.lblPlayer1 = new System.Windows.Forms.Label();
@@ -36,8 +37,12 @@
             this.btnXoa = new System.Windows.Forms.Button();
             this.txbPlayerName1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btLAN = new System.Windows.Forms.Button();
+            this.txtIP = new System.Windows.Forms.TextBox();
             this.pct1 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.prcbCoolDown = new System.Windows.Forms.ProgressBar();
+            this.tmlCoolDown = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -89,6 +94,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "3 x 3";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnXoa
             // 
@@ -111,6 +117,9 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.panel2.Controls.Add(this.prcbCoolDown);
+            this.panel2.Controls.Add(this.btLAN);
+            this.panel2.Controls.Add(this.txtIP);
             this.panel2.Controls.Add(this.lblPlayer2);
             this.panel2.Controls.Add(this.lblPlayer1);
             this.panel2.Controls.Add(this.btnThoat);
@@ -123,6 +132,23 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(317, 639);
             this.panel2.TabIndex = 2;
+            // 
+            // btLAN
+            // 
+            this.btLAN.Location = new System.Drawing.Point(111, 306);
+            this.btLAN.Name = "btLAN";
+            this.btLAN.Size = new System.Drawing.Size(93, 30);
+            this.btLAN.TabIndex = 11;
+            this.btLAN.Text = "LAN";
+            this.btLAN.UseVisualStyleBackColor = true;
+            this.btLAN.Click += new System.EventHandler(this.btLAN_Click);
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(18, 278);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(276, 22);
+            this.txtIP.TabIndex = 10;
             // 
             // pct1
             // 
@@ -145,6 +171,18 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            // 
+            // prcbCoolDown
+            // 
+            this.prcbCoolDown.Location = new System.Drawing.Point(18, 249);
+            this.prcbCoolDown.Name = "prcbCoolDown";
+            this.prcbCoolDown.Size = new System.Drawing.Size(276, 23);
+            this.prcbCoolDown.TabIndex = 12;
+            this.prcbCoolDown.Click += new System.EventHandler(this.prcbCoolDown_Click);
+            // 
+            // tmlCoolDown
+            // 
+            this.tmlCoolDown.Tick += new System.EventHandler(this.tmlCoolDown_Tick);
             // 
             // Form2
             // 
@@ -176,5 +214,9 @@
         private System.Windows.Forms.TextBox txbPlayerName1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pct1;
+        private System.Windows.Forms.Button btLAN;
+        private System.Windows.Forms.TextBox txtIP;
+        private System.Windows.Forms.ProgressBar prcbCoolDown;
+        private System.Windows.Forms.Timer tmlCoolDown;
     }
 }

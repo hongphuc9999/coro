@@ -1,6 +1,6 @@
 ﻿namespace game_caro
 {
-    partial class Form1
+    partial class Bang3
     {
         /// <summary>
         /// Required designer variable.
@@ -28,44 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlChessBoard = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblPlayer2 = new System.Windows.Forms.Label();
             this.lblPlayer1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnTHOAT = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pct = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btn_Click = new System.Windows.Forms.Button();
+            this.btnXOA = new System.Windows.Forms.Button();
             this.txbPlayerName = new System.Windows.Forms.TextBox();
+            this.pnlBangba = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pnlChessBoard
-            // 
-            this.pnlChessBoard.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pnlChessBoard.Location = new System.Drawing.Point(12, 15);
-            this.pnlChessBoard.Name = "pnlChessBoard";
-            this.pnlChessBoard.Size = new System.Drawing.Size(801, 636);
-            this.pnlChessBoard.TabIndex = 0;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel2.Controls.Add(this.lblPlayer2);
             this.panel2.Controls.Add(this.lblPlayer1);
-            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.btnTHOAT);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.pct);
             this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Controls.Add(this.btn_Click);
+            this.panel2.Controls.Add(this.btnXOA);
             this.panel2.Controls.Add(this.txbPlayerName);
-            this.panel2.Location = new System.Drawing.Point(819, 12);
+            this.panel2.Location = new System.Drawing.Point(697, 8);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(317, 639);
-            this.panel2.TabIndex = 1;
+            this.panel2.Size = new System.Drawing.Size(317, 616);
+            this.panel2.TabIndex = 3;
             // 
             // lblPlayer2
             // 
@@ -85,26 +77,26 @@
             this.lblPlayer1.Size = new System.Drawing.Size(111, 74);
             this.lblPlayer1.TabIndex = 8;
             // 
-            // button2
+            // btnTHOAT
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(90, 568);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 39);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Thoát ";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnTHOAT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTHOAT.Location = new System.Drawing.Point(90, 568);
+            this.btnTHOAT.Name = "btnTHOAT";
+            this.btnTHOAT.Size = new System.Drawing.Size(136, 39);
+            this.btnTHOAT.TabIndex = 7;
+            this.btnTHOAT.Text = "Thoát ";
+            this.btnTHOAT.UseVisualStyleBackColor = true;
+            this.btnTHOAT.Click += new System.EventHandler(this.btnTHOAT_Click);
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.MistyRose;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(102, 452);
+            this.button1.Location = new System.Drawing.Point(100, 436);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 46);
             this.button1.TabIndex = 6;
-            this.button1.Text = "3 x 3 ";
+            this.button1.Text = "5 x 5";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -130,16 +122,16 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // btn_Click
+            // btnXOA
             // 
-            this.btn_Click.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Click.Location = new System.Drawing.Point(90, 504);
-            this.btn_Click.Name = "btn_Click";
-            this.btn_Click.Size = new System.Drawing.Size(136, 39);
-            this.btn_Click.TabIndex = 1;
-            this.btn_Click.Text = "Xóa ";
-            this.btn_Click.UseVisualStyleBackColor = true;
-            this.btn_Click.Click += new System.EventHandler(this.btn_Click_Click);
+            this.btnXOA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXOA.Location = new System.Drawing.Point(90, 504);
+            this.btnXOA.Name = "btnXOA";
+            this.btnXOA.Size = new System.Drawing.Size(136, 39);
+            this.btnXOA.TabIndex = 1;
+            this.btnXOA.Text = "Xóa ";
+            this.btnXOA.UseVisualStyleBackColor = true;
+            this.btnXOA.Click += new System.EventHandler(this.btnXOA_Click);
             // 
             // txbPlayerName
             // 
@@ -148,18 +140,24 @@
             this.txbPlayerName.Size = new System.Drawing.Size(121, 22);
             this.txbPlayerName.TabIndex = 0;
             // 
-            // Form1
+            // pnlBangba
+            // 
+            this.pnlBangba.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlBangba.Location = new System.Drawing.Point(10, 8);
+            this.pnlBangba.Name = "pnlBangba";
+            this.pnlBangba.Size = new System.Drawing.Size(681, 616);
+            this.pnlBangba.TabIndex = 4;
+            // 
+            // Bang3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1146, 659);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(1022, 634);
+            this.Controls.Add(this.pnlBangba);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.pnlChessBoard);
-            this.Name = "Form1";
-            this.ShowIcon = false;
-            this.Text = "5x5";
-          
+            this.Name = "Bang3";
+            this.Text = "Bang3";
+            this.Load += new System.EventHandler(this.Bang3_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct)).EndInit();
@@ -170,16 +168,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlChessBoard;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btn_Click;
-        private System.Windows.Forms.TextBox txbPlayerName;
-        private System.Windows.Forms.PictureBox pct;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lblPlayer2;
         private System.Windows.Forms.Label lblPlayer1;
+        private System.Windows.Forms.Button btnTHOAT;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pct;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnXOA;
+        private System.Windows.Forms.TextBox txbPlayerName;
+        private System.Windows.Forms.Panel pnlBangba;
     }
 }
-

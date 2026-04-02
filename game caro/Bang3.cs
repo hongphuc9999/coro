@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,50 +10,45 @@ using System.Windows.Forms;
 
 namespace game_caro
 {
-    public partial class Form1 : Form
+    public partial class Bang3 : Form
     {
         #region Properties
-        ChessBoardManega ChessBoard;
-      
+        Bangba Bang;
         #endregion
-        public Form1()
+        public Bang3()
         {
             InitializeComponent();
-            ChessBoard = new ChessBoardManega(pnlChessBoard, txbPlayerName, pct, lblPlayer1, lblPlayer2);
-            ChessBoard.DrawChessBoard();
+            Bang = new Bangba(pnlBangba, txbPlayerName, pct, lblPlayer1, lblPlayer2);
+            Bang.DrawChessBoard1();
             newgame();
         }
-       
         void newgame()
         {
-            ChessBoard.ResetScore();      
-            ChessBoard.DrawChessBoard();
+            Bang.ResetScore();
+            Bang.DrawChessBoard1();
         }
-
-        private void UpdateScore()
+        private void Bang3_Load(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
-        private void btn_Click_Click(object sender, EventArgs e)
+        private void btnXOA_Click(object sender, EventArgs e)
         {
-           newgame();
+            newgame();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnTHOAT_Click(object sender, EventArgs e)
         {
             this.Hide();
             Trangchu o = new Trangchu();
             o.Show();
         }
 
-        
-
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            _3_vs_3_AI v = new _3_vs_3_AI();
-            v.Show();
+            Form2 b = new Form2();
+            b.Show();
         }
 
         

@@ -77,10 +77,7 @@ namespace game_caro
         #region Methods
         public void DrawChessBoard()
         {
-            player[0].Name = "";
-            player[1].Name = "";
-
-            UpdateScore();
+           
 
             ChessBoard.Controls.Clear();
             Matrix = new List<List<Button>>();
@@ -147,7 +144,7 @@ namespace game_caro
         }
         private void UpdateScore()
         {
-            lblPlayer1.Text = player[0].Name + "  " + player[0].Score;
+            lblPlayer1.Text = player[0].Name + " " + player[0].Score;
             lblPlayer2.Text = player[1].Name + " " + player[1].Score;
         }
         public void ResetScore()
@@ -373,7 +370,7 @@ namespace game_caro
             long attack = AttackPoint(btn);
             long defend = DefendPoint(btn);
 
-            // Ưu tiên dứt điểm hoặc chặn đối thủ khi đã có 4 quân
+           
             if (attack >= attackScore[4]) return attack * 10;
             if (defend >= defenseScore[4]) return defend * 10;
 
