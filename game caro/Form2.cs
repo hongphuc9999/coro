@@ -22,6 +22,7 @@ namespace game_caro
         public Form2()
         {
             InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = true;
             ChessBoard  = new ChessBoardManega1(ChessBoard1, txbPlayerName1, pct1, lblPlayer1, lblPlayer2);
            
             socket = new SocketManeger();
@@ -42,7 +43,10 @@ namespace game_caro
         void ChessBroad_PlayerMar(object sender, ButtonClickEvent e)
         {
             tmlCoolDown.Start();
+          
             prcbCoolDown.Value = 0;
+            socket.Send(new SocketData((int)SocketCommad.SEND_POINT, "", e.ClickPoint));
+            Listen();
         }
          void ChessBroad_EndGame(object sender, ButtonClickEvent e)
         {
@@ -90,11 +94,13 @@ namespace game_caro
 
             if(!socket.ConnectServer())
             {
+               
                 socket.CreateServer();
               
             }
             else
             {
+                
                 Listen();
 
                
@@ -139,7 +145,15 @@ namespace game_caro
                     case(int)SocketCommad.NEW_GAME:
                     break;
                     case(int)SocketCommad.SEND_POINT:
-                    ChessBoard.OtherPlayer(data.Point);
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        ChessBoard.OtherPlayer(data.Point);
+                        prcbCoolDown.Value = 0;
+                        ChessBoard1.Enabled = true;
+                        tmlCoolDown.Start();
+                    }));
+
+
                     break;
                     case(int)SocketCommad.UNDO: break;
                     case(int)SocketCommad.QUIT: break;

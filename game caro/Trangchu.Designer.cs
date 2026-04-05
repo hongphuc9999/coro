@@ -143,6 +143,7 @@
             this.khóToolStripMenuItem.Name = "khóToolStripMenuItem";
             this.khóToolStripMenuItem.Size = new System.Drawing.Size(243, 36);
             this.khóToolStripMenuItem.Text = "Khó";
+            this.khóToolStripMenuItem.Click += new System.EventHandler(this.khóToolStripMenuItem_Click);
             // 
             // Trangchu
             // 

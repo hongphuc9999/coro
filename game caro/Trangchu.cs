@@ -44,5 +44,12 @@ namespace game_caro
             a.Show();
 
         }
+
+        private void khóToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form3AI v = new Form3AI();
+            v.Show();
+        }
     }
 }

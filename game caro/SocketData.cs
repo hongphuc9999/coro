@@ -17,7 +17,7 @@ namespace game_caro
 
         private Point point;
 
-        public Point Point { get { return point; } set { } }
+        public Point Point { get { return point; } set { point = value; } }
 
         private string message;
 
@@ -37,6 +37,8 @@ namespace game_caro
             SEND_POINT,
             NOTIFY,
               NEW_GAME,
+            WIN,
+            DRAW,
               UNDO,
               QUIT
         }

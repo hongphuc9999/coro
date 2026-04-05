@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,10 +49,52 @@ namespace game_caro
             set { playerMark = value; }
         }
         private List<List<Button>> Matrix;
+        public List<List<Button>> matrix
+        {
+            get { return matrix; }
+            set { matrix = value; }
+        }
+
+        public bool Enabled
+        {
+            get { return bang.Enabled; }
+            set { bang.Enabled = value; }
+        }
+
+        private event EventHandler<ButtonClickEvent> playerMar;
+        public event EventHandler<ButtonClickEvent> PlayerMar
+        {
+            add
+            {
+                playerMar += value;
+            }
+            remove
+            {
+                playerMar -= value;
+            }
+        }
+        private event EventHandler<ButtonClickEvent> endGame;
+        public event EventHandler<ButtonClickEvent> EndGame
+        {
+            add
+            {
+                endGame += value;
+            }
+            remove
+            {
+                endGame -= value;
+            }
+        }
+        private event EventHandler drawGame;
+        public event EventHandler DrawGame
+        {
+            add { drawGame += value; }
+            remove { drawGame -= value; }
+        }
         private Label lblPlayer1;
         private Label lblPlayer2;
         private int countStep = 0;
-        
+        public int LastWinner { get; private set; } = -1;
         #endregion
 
         #region Initialize
@@ -69,6 +113,7 @@ namespace game_caro
             };
             currentPlayer = 0;
             Changer();
+            
         }
 
 
@@ -80,6 +125,7 @@ namespace game_caro
             Bang.Controls.Clear();
             Matrix = new List<List<Button>>();
             Button ol = new Button() { Width = 0, Location = new Point(0, 0) };
+            countStep = 0;
             for (int i = 0; i < taobang.CHESS_BOARD_HEIGHT; i++)
             {
                 Matrix.Add(new List<Button>());
@@ -102,7 +148,7 @@ namespace game_caro
                 ol.Location = new Point(0, ol.Location.Y + taobang.CHESS_HEIGHT);
                 ol.Width = 0;
                 ol.Height = 0;
-                countStep = 0;
+               
             }
         }
         void btn_Click(object sender, EventArgs e)
@@ -111,43 +157,104 @@ namespace game_caro
 
             if (btn.BackgroundImage != null)
                 return;
-
+            int playerBeforeMove = currentPlayer;
             Mark(btn);
+           
             countStep++;
 
             
             if (isEndgame(btn))
             {
-                Endgame();
+                Endgame(playerBeforeMove);
                 return;
             }
-            if (countStep == 9)
+            int totalCells = taobang.CHESS_BOARD_HEIGHT * taobang.CHESS_BOARD_WIDTH;
+            if (countStep >= totalCells)
             {
                 MessageBox.Show("Ván cờ hòa!");
 
-               
+                if (drawGame != null)
+                    drawGame(this, EventArgs.Empty);
                 DrawChessBoard1();
-
+                bang.Enabled = true;
                 return;
+             
+
+               
+            }
+            if (playerMar != null)
+            {
+                playerMar(this, new ButtonClickEvent(Toado(btn)));
             }
             Changer();
 
 
         }
-
-
-        private void Endgame()
+        public void OtherPlayer(Point point)
         {
-            Player[currentPlayer].Score++;
 
-            MessageBox.Show(Player[currentPlayer].Name + " thắng!");
 
-            
-            UpdateScore();
+            Button btn = Matrix[point.Y][point.X];
 
-            
+            if (btn.BackgroundImage != null)
+                return;
+            int playerBeforeMove = currentPlayer;
+            Mark(btn);
+            countStep++;
+            // kiểm tra thắng trước 
+            if (isEndgame(btn))
+            {
+                Endgame(playerBeforeMove);
+                return;
+            }
+            int totalCells = taobang.CHESS_BOARD_HEIGHT * taobang.CHESS_BOARD_WIDTH;
+            if (countStep >= totalCells)
+            {
+                
+                MessageBox.Show("Ván cờ hòa!");
+              
+                DrawChessBoard1();
+                bang.Enabled = true;
+                return;
+            }
+            Changer();
+        }
+        public void RemoteDraw()
+        {
+            MessageBox.Show("Ván cờ hòa!");
             DrawChessBoard1();
+            bang.Enabled = true;
+        }
+        public void RemoteWin(int winnerIndex)
+        {
+            Player[winnerIndex].Score++;
+            MessageBox.Show(Player[winnerIndex].Name + " thắng!");
+            UpdateScore();
+            DrawChessBoard1();
+            bang.Enabled = true;
+        }
+        private void Endgame(int winnerIndex)
+        {
+          //  Player[currentPlayer].Score++;
+            LastWinner = winnerIndex;
+           // MessageBox.Show(Player[currentPlayer].Name + " thắng!");
 
+            Player[winnerIndex].Score++;
+            MessageBox.Show(Player[winnerIndex].Name + " thắng!");
+            UpdateScore();
+            if (endGame != null)
+                endGame(this, new ButtonClickEvent(new Point(winnerIndex, -1)));
+
+            DrawChessBoard1();
+            bang.Enabled = true;
+        }
+        private void EndgameRemote(int winnerIndex)
+        {
+            Player[winnerIndex].Score++;
+            MessageBox.Show(Player[winnerIndex].Name + " thắng!\nVán mới bắt đầu...");
+            UpdateScore();
+            DrawChessBoard1();
+            bang.Enabled = true;
         }
         private void UpdateScore()
         {

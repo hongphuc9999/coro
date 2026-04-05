@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ using System.Windows.Forms;
 
 namespace game_caro
 {
-    public class ChessBoardManega
+    internal class AI_5vs5
     {
         #region Properties
         private Panel chessBoard;
@@ -19,19 +18,20 @@ namespace game_caro
             set { chessBoard = value; }
         }
         private List<Player> player;
-       public List<Player> Player { 
+        public List<Player> Player
+        {
             get { return player; }
             set { player = value; }
         }
 
 
         private int currentPlayer;
-        
+
 
         public int CurrentPlayer
         {
             get { return currentPlayer; }
-            set {  currentPlayer = value; }
+            set { currentPlayer = value; }
         }
 
         private TextBox playerName;
@@ -46,15 +46,14 @@ namespace game_caro
             get { return playerMark; }
             set { playerMark = value; }
         }
-        private List<List<Button>>Matrix ;
+        private List<List<Button>> Matrix;
         private Label lblPlayer1;
         private Label lblPlayer2;
         int[] attackScore = { 0, 9, 54, 162, 1458, 13122 };
         int[] defenseScore = { 0, 3, 27, 81, 729, 6561 };
         #endregion
-
         #region Initialize
-        public ChessBoardManega(Panel chessBoard, TextBox playerName, PictureBox mark, Label lblPlayer1, Label lblPlayer2)
+        public AI_5vs5(Panel chessBoard, TextBox playerName, PictureBox mark, Label lblPlayer1, Label lblPlayer2)
         {
             this.ChessBoard = chessBoard;
             this.playerName = playerName;
@@ -71,13 +70,13 @@ namespace game_caro
             Changer();
         }
 
-        
+
 
         #endregion
         #region Methods
         public void DrawChessBoard()
         {
-           
+
 
             ChessBoard.Controls.Clear();
             Matrix = new List<List<Button>>();
@@ -92,29 +91,29 @@ namespace game_caro
                         Width = Cons.CHESS_WIDTH,
                         Height = Cons.CHESS_HEIGHT,
                         Location = new Point(ol.Location.X + ol.Width, ol.Location.Y),
-                      BackgroundImageLayout = ImageLayout.Stretch,
-                      Tag = i.ToString()
+                        BackgroundImageLayout = ImageLayout.Stretch,
+                        Tag = i.ToString()
                     };
                     btn.Click += btn_Click;
                     ChessBoard.Controls.Add(btn);
                     Matrix[i].Add(btn);
                     ol = btn;
-                   
+
                 }
                 ol.Location = new Point(0, ol.Location.Y + Cons.CHESS_HEIGHT);
                 ol.Width = 0;
                 ol.Height = 0;
-               
+
 
             }
         }
-        async void btn_Click(object sender, EventArgs e)
+        void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
             if (btn.BackgroundImage != null)
                 return;
-            ChessBoard.Enabled = false;
+
             Mark(btn);
 
             //  KIỂM TRA THẮNG TRƯỚC
@@ -125,10 +124,9 @@ namespace game_caro
             }
 
             Changer();
-            await Task.Delay(2000);
+
             // AI đi
             AITurn();
-            ChessBoard.Enabled = true;
         }
         private void Endgame()
         {
@@ -155,18 +153,18 @@ namespace game_caro
 
             UpdateScore();
         }
-        
-           private bool isEndgame(Button btn)
+
+        private bool isEndgame(Button btn)
         {
-            return Hangngang(btn)|| Hangdoc(btn) || Hangcheotrai(btn) || Hangcheophai(btn);
+            return Hangngang(btn) || Hangdoc(btn) || Hangcheotrai(btn) || Hangcheophai(btn);
 
 
         }
-        
+
 
         private Point Toado(Button btn)
         {
-           
+
             int hangngang = Convert.ToInt32(btn.Tag);
             int hangdoc = Matrix[hangngang].IndexOf(btn);
             Point point = new Point(hangdoc, hangngang);
@@ -175,20 +173,20 @@ namespace game_caro
         }
         private bool Hangngang(Button btn)
         {
-            Point point= Toado(btn);
+            Point point = Toado(btn);
             int countLeft = 0;
-            for(int i = point.X; i >= 0; i--)
+            for (int i = point.X; i >= 0; i--)
+            {
+                if (Matrix[point.Y][i].BackgroundImage == btn.BackgroundImage)
                 {
-                    if (Matrix[point.Y][i].BackgroundImage == btn.BackgroundImage)
-                    {
-                        countLeft++;
-                    }
-                     else
-                         break;
+                    countLeft++;
                 }
+                else
+                    break;
+            }
 
             int countRight = 0;
-            for(int i = point.X + 1; i < Cons.CHESS_BOARD_WIDTH; i++)
+            for (int i = point.X + 1; i < Cons.CHESS_BOARD_WIDTH; i++)
             {
                 if (Matrix[point.Y][i].BackgroundImage == btn.BackgroundImage)
                 {
@@ -225,13 +223,13 @@ namespace game_caro
                     break;
             }
             return countTop + countBottom >= 5;
-            
+
         }
         private bool Hangcheotrai(Button btn)
         {
             Point point = Toado(btn);
             int countTop = 0;
-            for(int i = 0; i <= point.X;i++)
+            for (int i = 0; i <= point.X; i++)
             {
                 if (point.X - i < 0 || point.Y - i < 0)
                     break;
@@ -241,10 +239,10 @@ namespace game_caro
                 }
                 else
                     break;
-            } 
-            
+            }
+
             int countBottom = 0;
-            for(int i = 1; i <= Cons.CHESS_BOARD_WIDTH - point.X; i++)
+            for (int i = 1; i <= Cons.CHESS_BOARD_WIDTH - point.X; i++)
             {
                 if (point.X + i >= Cons.CHESS_BOARD_HEIGHT || point.Y + i >= Cons.CHESS_BOARD_WIDTH)
                     break;
@@ -264,7 +262,7 @@ namespace game_caro
             int countTop = 0;
             for (int i = 0; i <= point.X; i++)
             {
-                if (point.X  + i > Cons.CHESS_BOARD_WIDTH || point.Y - i < 0)
+                if (point.X + i > Cons.CHESS_BOARD_WIDTH || point.Y - i < 0)
                     break;
                 if (Matrix[point.Y - i][point.X + i].BackgroundImage == btn.BackgroundImage)
                 {
@@ -277,7 +275,7 @@ namespace game_caro
             int countBottom = 0;
             for (int i = 1; i <= Cons.CHESS_BOARD_WIDTH - point.X; i++)
             {
-                if (point.Y + i >= Cons.CHESS_BOARD_HEIGHT || point.X - i <0 )
+                if (point.Y + i >= Cons.CHESS_BOARD_HEIGHT || point.X - i < 0)
                     break;
                 if (Matrix[point.Y + i][point.X - i].BackgroundImage == btn.BackgroundImage)
                 {
@@ -290,7 +288,7 @@ namespace game_caro
             return countTop + countBottom >= 5;
         }
 
-        private void Mark(Button btn )
+        private void Mark(Button btn)
         {
             btn.BackgroundImage = Player[CurrentPlayer].Mark;
             CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
@@ -371,7 +369,7 @@ namespace game_caro
             long attack = AttackPoint(btn);
             long defend = DefendPoint(btn);
 
-           
+
             if (attack >= attackScore[4]) return attack * 10;
             if (defend >= defenseScore[4]) return defend * 10;
 
@@ -480,6 +478,7 @@ namespace game_caro
 
 
     }
-    
+
     #endregion
 }
+

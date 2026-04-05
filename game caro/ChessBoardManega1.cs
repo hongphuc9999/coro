@@ -144,17 +144,17 @@ namespace game_caro
                 return;
 
             Mark(btn);
-
+            if (playerMar != null)
+            {
+                playerMar(this, new ButtonClickEvent(Toado(btn)));
+            }
             // kiểm tra thắng trước 
             if (isEndgame(btn))
             {
                 Endgame();
                 return;
             }
-            if (playerMar != null)
-            {
-                playerMar(this, new ButtonClickEvent(Toado(btn)));
-            }
+           
             Changer();
             
 
@@ -170,7 +170,7 @@ namespace game_caro
 
             if (btn.BackgroundImage != null)
                 return;
-
+           
             Mark(btn);
 
             // kiểm tra thắng trước 

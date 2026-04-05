@@ -37,8 +37,7 @@ namespace game_caro
         Socket Server;
         public void CreateServer()
         {
-            if (Server != null)
-                return;
+            
 
             IPEndPoint o = new IPEndPoint(IPAddress.Parse(IP), POST);
 
@@ -64,7 +63,7 @@ namespace game_caro
         public string IP = "127.0.0.1";
         public int POST =8888;
         public bool isServer = true;
-        public const int BUFFER = 1024;
+        public const int BUFFER = 4096;
         public bool Send(object data)
         {
             byte[] senData = SerializeData(data);

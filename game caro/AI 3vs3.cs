@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace game_caro
 {
-    internal class _3vs3_AI
+    internal class AI_3vs3
     {
         #region Properties
         private Panel bang;
@@ -53,9 +53,8 @@ namespace game_caro
         private int countStep = 0;
         private bool isPlayerTurn;
         #endregion
-
         #region Initialize
-        public _3vs3_AI(Panel Bang, TextBox playerName1, PictureBox mark, Label lblPlayer1, Label lblPlayer2)
+        public AI_3vs3(Panel Bang, TextBox playerName1, PictureBox mark, Label lblPlayer1, Label lblPlayer2)
         {
             this.bang = Bang;
             this.playerName = playerName1;
@@ -106,11 +105,11 @@ namespace game_caro
                 countStep = 0;
             }
         }
-        async void btn_Click(object sender, EventArgs e)
+        void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             if (btn.BackgroundImage != null) return;
-            Bang.Enabled = false;
+
             // 1. Lượt của NGƯỜI CHƠI đánh
             Mark(btn);
             countStep++;
@@ -120,7 +119,6 @@ namespace game_caro
 
             // 2. Đổi sang lượt AI
             Changer();
-            await Task.Delay(2000);
 
             // 3. Gọi AI đánh (AI sẽ đánh bất kể quân gì, miễn là đến lượt nó)
             // Thay vì check currentPlayer == 1, ta check xem có phải lượt AI không
@@ -128,9 +126,7 @@ namespace game_caro
             {
                 AIMove();
             }
-            Bang.Enabled = true;
         }
-
 
 
         private void Endgame()
