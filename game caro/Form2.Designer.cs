@@ -37,11 +37,11 @@
             this.btnXoa = new System.Windows.Forms.Button();
             this.txbPlayerName1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.prcbCoolDown = new System.Windows.Forms.ProgressBar();
             this.btLAN = new System.Windows.Forms.Button();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.pct1 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.prcbCoolDown = new System.Windows.Forms.ProgressBar();
             this.tmlCoolDown = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct1)).BeginInit();
@@ -133,6 +133,14 @@
             this.panel2.Size = new System.Drawing.Size(317, 639);
             this.panel2.TabIndex = 2;
             // 
+            // prcbCoolDown
+            // 
+            this.prcbCoolDown.Location = new System.Drawing.Point(18, 249);
+            this.prcbCoolDown.Name = "prcbCoolDown";
+            this.prcbCoolDown.Size = new System.Drawing.Size(276, 23);
+            this.prcbCoolDown.TabIndex = 12;
+            this.prcbCoolDown.Click += new System.EventHandler(this.prcbCoolDown_Click);
+            // 
             // btLAN
             // 
             this.btLAN.Location = new System.Drawing.Point(111, 306);
@@ -172,14 +180,6 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // prcbCoolDown
-            // 
-            this.prcbCoolDown.Location = new System.Drawing.Point(18, 249);
-            this.prcbCoolDown.Name = "prcbCoolDown";
-            this.prcbCoolDown.Size = new System.Drawing.Size(276, 23);
-            this.prcbCoolDown.TabIndex = 12;
-            this.prcbCoolDown.Click += new System.EventHandler(this.prcbCoolDown_Click);
-            // 
             // tmlCoolDown
             // 
             this.tmlCoolDown.Tick += new System.EventHandler(this.tmlCoolDown_Tick);
@@ -191,6 +191,7 @@
             this.ClientSize = new System.Drawing.Size(1146, 659);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ChessBoard1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form2";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);

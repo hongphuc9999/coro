@@ -13,20 +13,20 @@ namespace game_caro
     public partial class Form3AI : Form
     {
         #region Properties
-        ChessBoardManega ChessBoard;
+        AI_5vs5 ChessBoardr;
 
         #endregion
         public Form3AI()
         {
             InitializeComponent();
-            ChessBoard = new ChessBoardManega(pnlChessBoard, txbPlayerName, pct, lblPlayer1, lblPlayer2);
-            ChessBoard.DrawChessBoard();
+            ChessBoardr = new AI_5vs5(pnlChessBoard, txbPlayerName2, pct2, lblPlayer1, lblPlayer2);
+            ChessBoardr.DrawChessBoard();
             newgame();
         }
         void newgame()
         {
-            ChessBoard.ResetScore();
-            ChessBoard.DrawChessBoard();
+            ChessBoardr.ResetScore();
+            ChessBoardr.DrawChessBoard();
         }
 
         private void Form3AI_Load(object sender, EventArgs e)

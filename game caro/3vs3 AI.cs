@@ -304,6 +304,7 @@ namespace game_caro
             PlayerName.Text = Player[CurrentPlayer].Name;
             PlayerMark.Image = Player[CurrentPlayer].Mark;
         }
+        // AI
         private void AIMove()
         {
             // Xác định index của AI và Người chơi trong mảng Player[]

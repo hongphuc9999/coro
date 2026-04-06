@@ -34,10 +34,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.btnTHOAT = new System.Windows.Forms.Button();
-            this.btnXOA = new System.Windows.Forms.Button();
-            this.pnlBangba = new System.Windows.Forms.Panel();
             this.pct = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnXOA = new System.Windows.Forms.Button();
+            this.pnlBangba = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -107,25 +107,6 @@
             this.btnTHOAT.UseVisualStyleBackColor = true;
             this.btnTHOAT.Click += new System.EventHandler(this.btnTHOAT_Click);
             // 
-            // btnXOA
-            // 
-            this.btnXOA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXOA.Location = new System.Drawing.Point(90, 504);
-            this.btnXOA.Name = "btnXOA";
-            this.btnXOA.Size = new System.Drawing.Size(136, 39);
-            this.btnXOA.TabIndex = 1;
-            this.btnXOA.Text = "Xóa ";
-            this.btnXOA.UseVisualStyleBackColor = true;
-            this.btnXOA.Click += new System.EventHandler(this.btnXOA_Click);
-            // 
-            // pnlBangba
-            // 
-            this.pnlBangba.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pnlBangba.Location = new System.Drawing.Point(9, 9);
-            this.pnlBangba.Name = "pnlBangba";
-            this.pnlBangba.Size = new System.Drawing.Size(681, 616);
-            this.pnlBangba.TabIndex = 8;
-            // 
             // pct
             // 
             this.pct.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -148,6 +129,25 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // btnXOA
+            // 
+            this.btnXOA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXOA.Location = new System.Drawing.Point(90, 504);
+            this.btnXOA.Name = "btnXOA";
+            this.btnXOA.Size = new System.Drawing.Size(136, 39);
+            this.btnXOA.TabIndex = 1;
+            this.btnXOA.Text = "Xóa ";
+            this.btnXOA.UseVisualStyleBackColor = true;
+            this.btnXOA.Click += new System.EventHandler(this.btnXOA_Click);
+            // 
+            // pnlBangba
+            // 
+            this.pnlBangba.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlBangba.Location = new System.Drawing.Point(9, 9);
+            this.pnlBangba.Name = "pnlBangba";
+            this.pnlBangba.Size = new System.Drawing.Size(681, 616);
+            this.pnlBangba.TabIndex = 8;
+            // 
             // Form_3vs3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -155,6 +155,7 @@
             this.ClientSize = new System.Drawing.Size(1022, 634);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlBangba);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form_3vs3";
             this.Text = "Form_3vs3";
             this.Load += new System.EventHandler(this.Form_3vs3_Load);

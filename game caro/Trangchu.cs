@@ -48,8 +48,8 @@ namespace game_caro
         private void khóToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form3AI v = new Form3AI();
-            v.Show();
+            Form3AI l = new Form3AI();
+            l.Show();
         }
     }
 }

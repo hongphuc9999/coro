@@ -248,14 +248,7 @@ namespace game_caro
             DrawChessBoard1();
             bang.Enabled = true;
         }
-        private void EndgameRemote(int winnerIndex)
-        {
-            Player[winnerIndex].Score++;
-            MessageBox.Show(Player[winnerIndex].Name + " thắng!\nVán mới bắt đầu...");
-            UpdateScore();
-            DrawChessBoard1();
-            bang.Enabled = true;
-        }
+      
         private void UpdateScore()
         {
             lblPlayer1.Text = player[0].Name + " " + player[0].Score;

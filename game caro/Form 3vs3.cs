@@ -15,19 +15,19 @@ namespace game_caro
     public partial class Form_3vs3 : Form
     {
         #region Properties
-        AI_3vs3 Bang;
+        AI_3vs3 Bang2;
         #endregion
         public Form_3vs3()
         {
             InitializeComponent();
-            Bang = new AI_3vs3(pnlBangba, txbPlayerName, pct, lblPlayer1, lblPlayer2);
-            Bang.DrawChessBoard1();
+            Bang2 = new AI_3vs3(pnlBangba, txbPlayerName, pct, lblPlayer1, lblPlayer2);
+            Bang2.DrawChessBoard1();
             newgame();
         }
         void newgame()
         {
-            Bang.ResetScore();
-            Bang.DrawChessBoard1();
+            Bang2.ResetScore();
+            Bang2.DrawChessBoard1();
         }
         private void Form_3vs3_Load(object sender, EventArgs e)
         {

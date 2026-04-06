@@ -11,11 +11,11 @@ namespace game_caro
     internal class AI_5vs5
     {
         #region Properties
-        private Panel chessBoard;
-        public Panel ChessBoard
+        private Panel chessBoardr;
+        public Panel ChessBoardr
         {
-            get { return chessBoard; }
-            set { chessBoard = value; }
+            get { return chessBoardr; }
+            set { chessBoardr = value; }
         }
         private List<Player> player;
         public List<Player> Player
@@ -55,7 +55,7 @@ namespace game_caro
         #region Initialize
         public AI_5vs5(Panel chessBoard, TextBox playerName, PictureBox mark, Label lblPlayer1, Label lblPlayer2)
         {
-            this.ChessBoard = chessBoard;
+            this.ChessBoardr = chessBoard;
             this.playerName = playerName;
             this.playerMark = mark;
             this.lblPlayer1 = lblPlayer1;
@@ -78,7 +78,7 @@ namespace game_caro
         {
 
 
-            ChessBoard.Controls.Clear();
+            ChessBoardr.Controls.Clear();
             Matrix = new List<List<Button>>();
             Button ol = new Button() { Width = 0, Location = new Point(0, 0) };
             for (int i = 0; i < Cons.CHESS_BOARD_HEIGHT; i++)
@@ -95,7 +95,7 @@ namespace game_caro
                         Tag = i.ToString()
                     };
                     btn.Click += btn_Click;
-                    ChessBoard.Controls.Add(btn);
+                    ChessBoardr.Controls.Add(btn);
                     Matrix[i].Add(btn);
                     ol = btn;
 

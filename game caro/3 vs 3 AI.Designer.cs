@@ -35,9 +35,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txbPlayerName = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.btnTHOAT = new System.Windows.Forms.Button();
             this.btnXOA = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -114,6 +114,18 @@
             this.panel2.Size = new System.Drawing.Size(317, 616);
             this.panel2.TabIndex = 5;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.MistyRose;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(100, 438);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(115, 46);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "5 x 5";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // btnTHOAT
             // 
             this.btnTHOAT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -136,18 +148,6 @@
             this.btnXOA.UseVisualStyleBackColor = true;
             this.btnXOA.Click += new System.EventHandler(this.btnXOA_Click);
             // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.MistyRose;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(100, 438);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(115, 46);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "5 x 5";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // _3_vs_3_AI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -155,6 +155,7 @@
             this.ClientSize = new System.Drawing.Size(1022, 634);
             this.Controls.Add(this.pnlBangba);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "_3_vs_3_AI";
             this.Text = "_3_vs_3_AI";
             this.Load += new System.EventHandler(this._3_vs_3_AI_Load);

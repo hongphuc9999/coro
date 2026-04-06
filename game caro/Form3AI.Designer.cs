@@ -32,14 +32,14 @@
             this.lblPlayer2 = new System.Windows.Forms.Label();
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.pct = new System.Windows.Forms.PictureBox();
+            this.txtAIkho = new System.Windows.Forms.Button();
+            this.pct2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_Click = new System.Windows.Forms.Button();
-            this.txbPlayerName = new System.Windows.Forms.TextBox();
+            this.txbPlayerName2 = new System.Windows.Forms.TextBox();
             this.pnlChessBoard = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pct)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pct2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,11 +49,11 @@
             this.panel2.Controls.Add(this.lblPlayer2);
             this.panel2.Controls.Add(this.lblPlayer1);
             this.panel2.Controls.Add(this.button2);
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.pct);
+            this.panel2.Controls.Add(this.txtAIkho);
+            this.panel2.Controls.Add(this.pct2);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Controls.Add(this.btn_Click);
-            this.panel2.Controls.Add(this.txbPlayerName);
+            this.panel2.Controls.Add(this.txbPlayerName2);
             this.panel2.Location = new System.Drawing.Point(818, 10);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(317, 639);
@@ -88,28 +88,28 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button1
+            // txtAIkho
             // 
-            this.button1.BackColor = System.Drawing.Color.MistyRose;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(102, 452);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 46);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "3 x 3 ";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.txtAIkho.BackColor = System.Drawing.Color.MistyRose;
+            this.txtAIkho.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAIkho.Location = new System.Drawing.Point(102, 452);
+            this.txtAIkho.Name = "txtAIkho";
+            this.txtAIkho.Size = new System.Drawing.Size(115, 46);
+            this.txtAIkho.TabIndex = 6;
+            this.txtAIkho.Text = "3 x 3 ";
+            this.txtAIkho.UseVisualStyleBackColor = false;
+            this.txtAIkho.Click += new System.EventHandler(this.button1_Click);
             // 
-            // pct
+            // pct2
             // 
-            this.pct.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.pct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pct.Location = new System.Drawing.Point(3, 3);
-            this.pct.Name = "pct";
-            this.pct.Size = new System.Drawing.Size(121, 120);
-            this.pct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pct.TabIndex = 5;
-            this.pct.TabStop = false;
+            this.pct2.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.pct2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pct2.Location = new System.Drawing.Point(3, 3);
+            this.pct2.Name = "pct2";
+            this.pct2.Size = new System.Drawing.Size(121, 120);
+            this.pct2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pct2.TabIndex = 5;
+            this.pct2.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -133,12 +133,12 @@
             this.btn_Click.UseVisualStyleBackColor = true;
             this.btn_Click.Click += new System.EventHandler(this.btn_Click_Click);
             // 
-            // txbPlayerName
+            // txbPlayerName2
             // 
-            this.txbPlayerName.Location = new System.Drawing.Point(3, 129);
-            this.txbPlayerName.Name = "txbPlayerName";
-            this.txbPlayerName.Size = new System.Drawing.Size(121, 22);
-            this.txbPlayerName.TabIndex = 0;
+            this.txbPlayerName2.Location = new System.Drawing.Point(3, 129);
+            this.txbPlayerName2.Name = "txbPlayerName2";
+            this.txbPlayerName2.Size = new System.Drawing.Size(121, 22);
+            this.txbPlayerName2.TabIndex = 0;
             // 
             // pnlChessBoard
             // 
@@ -155,13 +155,13 @@
             this.ClientSize = new System.Drawing.Size(1146, 659);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlChessBoard);
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form3AI";
             this.Text = "Form3AI";
             this.Load += new System.EventHandler(this.Form3AI_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pct)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pct2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -173,11 +173,11 @@
         private System.Windows.Forms.Label lblPlayer2;
         private System.Windows.Forms.Label lblPlayer1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.PictureBox pct;
+        private System.Windows.Forms.Button txtAIkho;
+        private System.Windows.Forms.PictureBox pct2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btn_Click;
-        private System.Windows.Forms.TextBox txbPlayerName;
+        private System.Windows.Forms.TextBox txbPlayerName2;
         private System.Windows.Forms.Panel pnlChessBoard;
     }
 }

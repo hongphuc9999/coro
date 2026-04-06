@@ -34,10 +34,10 @@
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.btn_Click = new System.Windows.Forms.Button();
-            this.txbPlayerName = new System.Windows.Forms.TextBox();
             this.pct = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_Click = new System.Windows.Forms.Button();
+            this.txbPlayerName = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -108,24 +108,6 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // btn_Click
-            // 
-            this.btn_Click.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Click.Location = new System.Drawing.Point(90, 504);
-            this.btn_Click.Name = "btn_Click";
-            this.btn_Click.Size = new System.Drawing.Size(136, 39);
-            this.btn_Click.TabIndex = 1;
-            this.btn_Click.Text = "Xóa ";
-            this.btn_Click.UseVisualStyleBackColor = true;
-            this.btn_Click.Click += new System.EventHandler(this.btn_Click_Click);
-            // 
-            // txbPlayerName
-            // 
-            this.txbPlayerName.Location = new System.Drawing.Point(3, 129);
-            this.txbPlayerName.Name = "txbPlayerName";
-            this.txbPlayerName.Size = new System.Drawing.Size(121, 22);
-            this.txbPlayerName.TabIndex = 0;
-            // 
             // pct
             // 
             this.pct.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -148,6 +130,24 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // btn_Click
+            // 
+            this.btn_Click.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Click.Location = new System.Drawing.Point(90, 504);
+            this.btn_Click.Name = "btn_Click";
+            this.btn_Click.Size = new System.Drawing.Size(136, 39);
+            this.btn_Click.TabIndex = 1;
+            this.btn_Click.Text = "Xóa ";
+            this.btn_Click.UseVisualStyleBackColor = true;
+            this.btn_Click.Click += new System.EventHandler(this.btn_Click_Click);
+            // 
+            // txbPlayerName
+            // 
+            this.txbPlayerName.Location = new System.Drawing.Point(3, 129);
+            this.txbPlayerName.Name = "txbPlayerName";
+            this.txbPlayerName.Size = new System.Drawing.Size(121, 22);
+            this.txbPlayerName.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -156,6 +156,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlChessBoard);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "5x5";

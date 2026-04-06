@@ -89,7 +89,6 @@
     <Compile Include="Form3AI.Designer.cs">
       <DependentUpon>Form3AI.cs</DependentUpon>
     </Compile>
-    <Compile Include="NetworkInterfaceType_type.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtIP = new System.Windows.Forms.TextBox();
+            this.btnLAN = new System.Windows.Forms.Button();
+            this.prcCoolDown1 = new System.Windows.Forms.ProgressBar();
             this.lblPlayer2 = new System.Windows.Forms.Label();
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.btnTHOAT = new System.Windows.Forms.Button();
@@ -40,9 +43,6 @@
             this.txbPlayerName = new System.Windows.Forms.TextBox();
             this.pnlBangba = new System.Windows.Forms.Panel();
             this.tmlCoolDown = new System.Windows.Forms.Timer(this.components);
-            this.btnLAN = new System.Windows.Forms.Button();
-            this.txtIP = new System.Windows.Forms.TextBox();
-            this.prcCoolDown1 = new System.Windows.Forms.ProgressBar();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -50,6 +50,9 @@
             // 
             // panel2
             // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel2.Controls.Add(this.txtIP);
             this.panel2.Controls.Add(this.btnLAN);
@@ -66,6 +69,31 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(317, 616);
             this.panel2.TabIndex = 3;
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(18, 290);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(276, 22);
+            this.txtIP.TabIndex = 12;
+            // 
+            // btnLAN
+            // 
+            this.btnLAN.Location = new System.Drawing.Point(112, 328);
+            this.btnLAN.Name = "btnLAN";
+            this.btnLAN.Size = new System.Drawing.Size(75, 23);
+            this.btnLAN.TabIndex = 11;
+            this.btnLAN.Text = "LAN";
+            this.btnLAN.UseVisualStyleBackColor = true;
+            this.btnLAN.Click += new System.EventHandler(this.txtIP_Click);
+            // 
+            // prcCoolDown1
+            // 
+            this.prcCoolDown1.Location = new System.Drawing.Point(18, 261);
+            this.prcCoolDown1.Name = "prcCoolDown1";
+            this.prcCoolDown1.Size = new System.Drawing.Size(276, 23);
+            this.prcCoolDown1.TabIndex = 10;
+            this.prcCoolDown1.Click += new System.EventHandler(this.prcCoolDown1_Click);
             // 
             // lblPlayer2
             // 
@@ -150,6 +178,9 @@
             // 
             // pnlBangba
             // 
+            this.pnlBangba.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBangba.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pnlBangba.Location = new System.Drawing.Point(10, 8);
             this.pnlBangba.Name = "pnlBangba";
@@ -160,31 +191,6 @@
             // 
             this.tmlCoolDown.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btnLAN
-            // 
-            this.btnLAN.Location = new System.Drawing.Point(112, 328);
-            this.btnLAN.Name = "btnLAN";
-            this.btnLAN.Size = new System.Drawing.Size(75, 23);
-            this.btnLAN.TabIndex = 11;
-            this.btnLAN.Text = "LAN";
-            this.btnLAN.UseVisualStyleBackColor = true;
-            this.btnLAN.Click += new System.EventHandler(this.txtIP_Click);
-            // 
-            // txtIP
-            // 
-            this.txtIP.Location = new System.Drawing.Point(18, 290);
-            this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(276, 22);
-            this.txtIP.TabIndex = 12;
-            // 
-            // prcCoolDown1
-            // 
-            this.prcCoolDown1.Location = new System.Drawing.Point(18, 261);
-            this.prcCoolDown1.Name = "prcCoolDown1";
-            this.prcCoolDown1.Size = new System.Drawing.Size(276, 23);
-            this.prcCoolDown1.TabIndex = 10;
-            this.prcCoolDown1.Click += new System.EventHandler(this.prcCoolDown1_Click);
-            // 
             // Bang3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -192,6 +198,7 @@
             this.ClientSize = new System.Drawing.Size(1022, 634);
             this.Controls.Add(this.pnlBangba);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Bang3";
             this.Text = "Bang3";
             this.Load += new System.EventHandler(this.Bang3_Load);

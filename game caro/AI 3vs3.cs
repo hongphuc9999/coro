@@ -11,12 +11,12 @@ namespace game_caro
     internal class AI_3vs3
     {
         #region Properties
-        private Panel bang;
+        private Panel bang2;
 
-        public Panel Bang
+        public Panel Bang2
         {
-            get { return bang; }
-            set { bang = value; }
+            get { return bang2; }
+            set { bang2 = value; }
         }
         private List<Player> player;
         public List<Player> Player
@@ -56,7 +56,7 @@ namespace game_caro
         #region Initialize
         public AI_3vs3(Panel Bang, TextBox playerName1, PictureBox mark, Label lblPlayer1, Label lblPlayer2)
         {
-            this.bang = Bang;
+            this.bang2 = Bang;
             this.playerName = playerName1;
             this.playerMark = mark;
             this.lblPlayer1 = lblPlayer1;
@@ -77,7 +77,7 @@ namespace game_caro
         #region Methods
         public void DrawChessBoard1()
         {
-            Bang.Controls.Clear();
+            Bang2.Controls.Clear();
             Matrix = new List<List<Button>>();
             Button ol = new Button() { Width = 0, Location = new Point(0, 0) };
             for (int i = 0; i < taobang.CHESS_BOARD_HEIGHT; i++)
@@ -94,7 +94,7 @@ namespace game_caro
                         Tag = i.ToString()
                     };
                     btn.Click += btn_Click;
-                    Bang.Controls.Add(btn);
+                    Bang2.Controls.Add(btn);
                     Matrix[i].Add(btn);
                     ol = btn;
 
@@ -300,6 +300,7 @@ namespace game_caro
             PlayerName.Text = Player[CurrentPlayer].Name;
             PlayerMark.Image = Player[CurrentPlayer].Mark;
         }
+        // AI
         private void AIMove()
         {
             // Xác định index của AI và Người chơi trong mảng Player[]
