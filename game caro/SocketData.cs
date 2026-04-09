@@ -10,37 +10,26 @@ namespace game_caro
     [Serializable]
     internal class SocketData
     {
-        private int commad;
+        public int Commad { get; set; }
+        public Point Point { get; set; }
+        public string Message { get; set; }
 
-        public int Commad
-        { get { return commad; } set { commad = value; } }
-
-        private Point point;
-
-        public Point Point { get { return point; } set { point = value; } }
-
-        private string message;
-
-        public string Message
+        public SocketData(int commad, string message, Point point)
         {
-            get { return message; }
-            set { message = value; }
+            Commad = commad;
+            Message = message;
+            Point = point;
         }
 
-        public SocketData(int commad, string message ,  Point point )
-        {
-            this.Commad = commad;
-            this.Point = point;
-        }
         public enum SocketCommad
         {
             SEND_POINT,
             NOTIFY,
-              NEW_GAME,
+            NEW_GAME,
             WIN,
             DRAW,
-              UNDO,
-              QUIT
+            UNDO,
+            QUIT
         }
     }
 }

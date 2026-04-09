@@ -90,20 +90,24 @@ namespace game_caro
 
         private void btLAN_Click(object sender, EventArgs e)
         {
-            socket.IP = txtIP.Text;
+            string inputIP = txtIP.Text.Trim();
 
-            if(!socket.ConnectServer())
+            if (string.IsNullOrEmpty(inputIP))
             {
-               
+
                 socket.CreateServer();
-              
+                Listen();
+
             }
             else
             {
-                
-                Listen();
+                socket.IP = inputIP;
+                if (socket.ConnectServer())
+                {
+                    Listen();
+                }
 
-               
+
             }
         }
        void Listen()

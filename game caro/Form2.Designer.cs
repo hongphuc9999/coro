@@ -191,7 +191,7 @@
             this.ClientSize = new System.Drawing.Size(1146, 659);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ChessBoard1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Form2";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
