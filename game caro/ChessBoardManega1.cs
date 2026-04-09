@@ -54,6 +54,9 @@ namespace game_caro
             get {  return matrix; }
             set { matrix = value; }
         }
+
+        public bool Enabled { get; internal set; }
+
         private event EventHandler<ButtonClickEvent> playerMar;
         public event EventHandler<ButtonClickEvent> PlayerMar
         {
@@ -95,8 +98,8 @@ namespace game_caro
 
             this.player = new List<Player>()
             {
-                new Player ("Player 1",Image.FromFile(Application.StartupPath + "anh3.png")),
-                new Player("Player 2",Image.FromFile(Application.StartupPath + "anh4.png"))
+                new Player ("Player 1",Image.FromFile(Application.StartupPath + "\\Resources\\anh3.png")),
+                new Player("Player 2",Image.FromFile(Application.StartupPath + "\\Resources\\anh4.png"))
             };
             currentPlayer = 0;
             Changer();

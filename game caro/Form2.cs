@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static game_caro.SocketData;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace game_caro
 {
@@ -19,63 +20,177 @@ namespace game_caro
         ChessBoardManega1 ChessBoard;
         SocketManeger socket;
       
+     
+
         public Form2()
         {
             InitializeComponent();
-            Control.CheckForIllegalCrossThreadCalls = true;
-            ChessBoard  = new ChessBoardManega1(ChessBoard1, txbPlayerName1, pct1, lblPlayer1, lblPlayer2);
-           
+
+            ChessBoard = new ChessBoardManega1(ChessBoard1, txbPlayerName1, pct1, lblPlayer1, lblPlayer2);
             socket = new SocketManeger();
+
+            // Đăng ký sự kiện lắng nghe từ SocketManeger
+            socket.Connected += Socket_Connected;
+            socket.DataReceived += Socket_DataReceived;
+
             ChessBoard.PlayerMar += ChessBroad_PlayerMar;
             ChessBoard.EndGame += ChessBroad_EndGame;
+
             prcbCoolDown.Step = Cons.COOL_DOWN_STEP;
             prcbCoolDown.Maximum = Cons.COOL_DOWN_TIME;
             prcbCoolDown.Value = 0;
             tmlCoolDown.Interval = Cons.COOL_DOWN_INVERVAL;
+
             ChessBoard.DrawChessBoard();
-            
+
+            // Lúc mới mở Form, khóa bàn cờ lại chờ kết nối mạng
+            ChessBoard1.Enabled = false;
         }
-        void EndGame()
+
+        #region Socket Events (Xử lý mạng LAN)
+        private void Socket_Connected()
         {
-           ChessBoard1.Enabled = false;
-            MessageBox.Show("End");
+            this.Invoke((MethodInvoker)(() =>
+            {
+                MessageBox.Show("Đã kết nối 2 máy thành công! Bắt đầu chơi Caro.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Máy làm Host (tạo phòng) sẽ được đi trước
+                if (socket.IsServer)
+                {
+                    ChessBoard1.Enabled = true;
+                }
+                else
+                {
+                    ChessBoard1.Enabled = false; // Máy Client chờ Host đi trước
+                }
+            }));
         }
+
+        private void Socket_DataReceived(SocketData data)
+        {
+            ProcesData(data);
+        }
+
+        private void ProcesData(SocketData data)
+        {
+            if (data == null) return;
+
+            this.Invoke((MethodInvoker)(() =>
+            {
+                switch (data.Commad)
+                {
+                    case (int)SocketCommad.NOTIFY:
+                        MessageBox.Show(data.Message);
+                        break;
+
+                    case (int)SocketCommad.NEW_GAME:
+                        // Xử lý tạo game mới nếu cần
+                        break;
+
+                    case (int)SocketCommad.SEND_POINT:
+                        // Đối thủ đã đánh, vẽ lên bàn cờ của mình
+                        ChessBoard.OtherPlayer(data.Point);
+                        prcbCoolDown.Value = 0;
+                        tmlCoolDown.Start();
+
+                        // Mở khóa bàn cờ để đến lượt mình đánh
+                        ChessBoard1.Enabled = true;
+                        break;
+
+                    case (int)SocketCommad.WIN:
+                        tmlCoolDown.Stop();
+                        ChessBoard1.Enabled = false;
+                        MessageBox.Show("Đối thủ đã chiến thắng!", "Kết thúc");
+                        break;
+
+                    case (int)SocketCommad.UNDO:
+                        break;
+
+                    case (int)SocketCommad.QUIT:
+                        tmlCoolDown.Stop();
+                        ChessBoard1.Enabled = false;
+                        MessageBox.Show("Đối thủ đã thoát khỏi trò chơi.", "Thông báo");
+                        break;
+                }
+            }));
+        }
+        #endregion
+
+        #region Game Logic & UI Events
         void ChessBroad_PlayerMar(object sender, ButtonClickEvent e)
         {
             tmlCoolDown.Start();
-          
             prcbCoolDown.Value = 0;
+
+            // Gửi tọa độ nước đi sang máy đối thủ
             socket.Send(new SocketData((int)SocketCommad.SEND_POINT, "", e.ClickPoint));
-            Listen();
-        }
-         void ChessBroad_EndGame(object sender, ButtonClickEvent e)
-        {
-           EndGame();
+
+            // Đánh xong thì khóa bàn cờ của mình lại, chờ đối thủ đánh
+            ChessBoard1.Enabled = false;
         }
 
-       
-
-        private void Form2_Load(object sender, EventArgs e)
+        void ChessBroad_EndGame(object sender, ButtonClickEvent e)
         {
-            txtIP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
-            if (string.IsNullOrEmpty(txtIP.Text))
+            // Báo cho máy kia biết mình đã thắng
+            socket.Send(new SocketData((int)SocketCommad.WIN, "", e.ClickPoint));
+            EndGame();
+        }
+
+        void EndGame()
+        {
+            tmlCoolDown.Stop();
+            prcbCoolDown.Value = 0;
+            ChessBoard1.Enabled = false;
+            MessageBox.Show("Trò chơi kết thúc!", "Thông báo");
+        }
+
+        private void tmlCoolDown_Tick(object sender, EventArgs e)
+        {
+            prcbCoolDown.PerformStep();
+
+            if (prcbCoolDown.Value >= prcbCoolDown.Maximum)
             {
-                txtIP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                tmlCoolDown.Stop();
+                EndGame();
+            }
+        }
+        #endregion
+
+        #region Nút bấm giao diện
+        // Giả sử nút "LAN" của bạn tên là btLAN
+        private void btLAN_Click(object sender, EventArgs e)
+        {
+            string inputIP = txtIP.Text.Trim();
+
+            if (string.IsNullOrEmpty(inputIP))
+            {
+                // Nếu để trống IP -> Máy này làm HOST
+                socket.CreateServer();
+                txtIP.Enabled = false;
+                btLAN.Enabled = false;
+            }
+            else
+            {
+                // Nếu nhập IP -> Máy này làm CLIENT
+                if (socket.ConnectServer(inputIP))
+                {
+                    txtIP.Enabled = false;
+                    btLAN.Enabled = false;
+                }
             }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            Newgame();
-        }
-        void Newgame()
-        {
+            // Reset lại game (nếu bạn đã viết hàm reset trong ChessBoardManega1)
             ChessBoard.DrawChessBoard();
-            ChessBoard.ResetScore();
+            prcbCoolDown.Value = 0;
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
+            socket.Send(new SocketData((int)SocketCommad.QUIT, "", new Point()));
+            socket.CloseConnection();
             this.Hide();
             Trangchu o = new Trangchu();
             o.Show();
@@ -83,109 +198,20 @@ namespace game_caro
 
         private void button1_Click(object sender, EventArgs e)
         {
+            socket.CloseConnection();
             this.Hide();
             Bang3 b = new Bang3();
             b.Show();
         }
 
-        private void btLAN_Click(object sender, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e)
         {
-            string inputIP = txtIP.Text.Trim();
-
-            if (string.IsNullOrEmpty(inputIP))
-            {
-
-                socket.CreateServer();
-                Listen();
-
-            }
-            else
-            {
-                socket.IP = inputIP;
-                if (socket.ConnectServer())
-                {
-                    Listen();
-                }
-
-
-            }
+            txtIP.Text = "";
         }
-       void Listen()
-        {
-            
-            
-                Thread listenthread = new Thread(() =>
-                {
 
-                   try
-                    {
-                        SocketData data = (SocketData)socket.Receive();
-                        ProcesData(data);
-                    }
-                    catch
-                    {
-
-                    }
-
-                });
-                listenthread.IsBackground = true;
-                listenthread.Start();
-            
-            
-
-            
-        }
-        void ChessBroad(object sender, ButtonClickEvent e)
-        {
-             socket.Send(new SocketData((int)SocketCommad.SEND_POINT,"",e.ClickPoint));
-        }
-        private void ProcesData(SocketData data)
-        {
-            switch(data.Commad)
-            {
-                case (int)SocketCommad.NOTIFY:
-                    MessageBox.Show(data.Message);
-                        break;
-                    case(int)SocketCommad.NEW_GAME:
-                    break;
-                    case(int)SocketCommad.SEND_POINT:
-                    this.Invoke((MethodInvoker)(() =>
-                    {
-                        ChessBoard.OtherPlayer(data.Point);
-                        prcbCoolDown.Value = 0;
-                        ChessBoard1.Enabled = true;
-                        tmlCoolDown.Start();
-                    }));
-
-
-                    break;
-                    case(int)SocketCommad.UNDO: break;
-                    case(int)SocketCommad.QUIT: break;
-                    default:
-                    break;
-
-            }
-            Listen();
-        }
+        private void prcbCoolDown_Click(object sender, EventArgs e) { }
         #endregion
-
-        private void prcbCoolDown_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tmlCoolDown_Tick(object sender, EventArgs e)
-        {
-            prcbCoolDown.PerformStep();
-
-            if(prcbCoolDown.Value>=prcbCoolDown.Maximum)
-            {
-                tmlCoolDown.Stop();
-                EndGame ();
-              
-            }
-        }
     }
-   
-    
+    #endregion
+
 }

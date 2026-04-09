@@ -17,14 +17,18 @@ namespace game_caro
     internal class SocketManeger
     {
         #region Properties
-        public string IP { get; set; } = "";
-        public int Port { get; set; } = 9999;           // ← Đổi port cố định dễ nhớ
+        public string IP { get; set; } = "127.0.0.1";
+        public int Port { get; set; } = 9999;
         public Socket Client { get; private set; }
         public Socket Server { get; private set; }
         public bool IsServer { get; private set; } = false;
 
         private Thread listenThread;
         private bool isListening = false;
+
+        // Bổ sung Event để truyền dữ liệu sang Form
+        public event Action<SocketData> DataReceived;
+        public event Action Connected; // Thông báo khi 2 máy kết nối thành công
         #endregion
 
         #region Server
@@ -32,21 +36,27 @@ namespace game_caro
         {
             try
             {
-                IPEndPoint ipe = new IPEndPoint(IPAddress.Any, Port);
-
                 Server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                Server.Bind(ipe);
-                Server.Listen(1);   // Chỉ cho 1 người chơi kết nối
-
+                Server.Bind(new IPEndPoint(IPAddress.Any, Port));
+                Server.Listen(1);
                 IsServer = true;
 
-                // Thread chấp nhận client
+                string ipLan = GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+                if (string.IsNullOrEmpty(ipLan) || ipLan == "Không tìm thấy IP")
+                {
+                    ipLan = GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                }
+
+                MessageBox.Show(
+                    $"Bạn là HOST.\nIP của bạn là: {ipLan}\n" +
+                    $"Hãy gửi IP này cho đối thủ để họ kết nối.",
+                    "Thông báo Server",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
                 Thread acceptThread = new Thread(AcceptClient);
                 acceptThread.IsBackground = true;
                 acceptThread.Start();
-
-                MessageBox.Show($"Server đã khởi tạo thành công!\n\nPort: {Port}\n\nIP của bạn là:\n{GetLocalIPv4(NetworkInterfaceType.Wireless80211)}\nHoặc\n{GetLocalIPv4(NetworkInterfaceType.Ethernet)}\n\nHãy cho đối thủ nhập IP này!",
-                    "Thông báo Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -58,10 +68,8 @@ namespace game_caro
         {
             try
             {
-                Client = Server.Accept();   // Chờ client kết nối
-                MessageBox.Show("Đối thủ đã kết nối thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Bắt đầu lắng nghe dữ liệu
+                Client = Server.Accept();
+                Connected?.Invoke(); // Báo cho Form biết đã có người kết nối
                 StartListening();
             }
             catch { }
@@ -69,22 +77,22 @@ namespace game_caro
         #endregion
 
         #region Client
-        public bool ConnectServer()
+        public bool ConnectServer(string inputIP)
         {
             try
             {
-                IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(IP), Port);
+                IsServer = false;
+                IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(inputIP), Port);
                 Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Client.Connect(ipe);
 
-                MessageBox.Show("Kết nối đến Server thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                Connected?.Invoke(); // Báo cho Form biết đã kết nối thành công tới Server
                 StartListening();
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kết nối thất bại: " + ex.Message + "\n\nKiểm tra lại IP và đảm bảo Server đã chạy.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Kết nối thất bại: " + ex.Message + "\n\nĐảm bảo Host đã ấn LAN trước.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
         }
@@ -104,13 +112,11 @@ namespace game_caro
         private void ListenThread()
         {
             byte[] buffer = new byte[4096];
-
             while (true)
             {
                 try
                 {
-                    if (Client == null || !Client.Connected)
-                        break;
+                    if (Client == null || !Client.Connected) break;
 
                     int bytesReceived = Client.Receive(buffer);
                     if (bytesReceived > 0)
@@ -120,37 +126,23 @@ namespace game_caro
 
                         SocketData data = (SocketData)DeserializeData(receivedData);
 
-                        // Gọi xử lý dữ liệu trên UI thread
-                        if (Form.ActiveForm != null)
-                        {
-                            Form.ActiveForm.Invoke(new Action(() =>
-                            {
-                                // Bạn sẽ gọi ProcesData từ form
-                                // Tạm thời chúng ta sẽ để form xử lý sau
-                                // Hoặc bạn có thể tạo event
-                            }));
-                        }
-
-                        // Vì code cũ của bạn dùng Receive() blocking, chúng ta sẽ giữ cơ chế cũ
-                        // Nhưng cải tiến để ổn định hơn
+                        // Bắn sự kiện mang dữ liệu qua Form xử lý
+                        DataReceived?.Invoke(data);
                     }
                 }
                 catch
                 {
-                    // Kết nối bị ngắt
                     break;
                 }
             }
-
             isListening = false;
         }
         #endregion
 
-        #region Send & Receive
+        #region Send
         public bool Send(object data)
         {
-            if (Client == null || !Client.Connected)
-                return false;
+            if (Client == null || !Client.Connected) return false;
 
             try
             {
@@ -161,23 +153,6 @@ namespace game_caro
             {
                 return false;
             }
-        }
-
-        public object Receive()
-        {
-            if (Client == null || !Client.Connected)
-                throw new Exception("Chưa kết nối");
-
-            byte[] buffer = new byte[4096];
-            int bytes = Client.Receive(buffer);
-
-            if (bytes > 0)
-            {
-                byte[] data = new byte[bytes];
-                Array.Copy(buffer, data, bytes);
-                return DeserializeData(data);
-            }
-            return null;
         }
         #endregion
 
@@ -206,17 +181,24 @@ namespace game_caro
         #region Get IP
         public string GetLocalIPv4(NetworkInterfaceType _type)
         {
-            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
+            try
             {
-                if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
+                foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                    if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
                     {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            return ip.Address.ToString();
+                        foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                        {
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                            {
+                                if (ip.Address.ToString().StartsWith("127.")) continue;
+                                return ip.Address.ToString();
+                            }
+                        }
                     }
                 }
             }
+            catch { }
             return "Không tìm thấy IP";
         }
         #endregion
@@ -230,5 +212,16 @@ namespace game_caro
             }
             catch { }
         }
+
+        internal void ConnectToServer(string inputIP)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal SocketData Receive()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
+
